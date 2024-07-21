@@ -19,11 +19,11 @@ services:
       - collectd
     overrides:
       volumes:
-        - ./config/collectd/common/apache.conf:/etc/collectd/collectd.conf.d/apache.conf
-        - ./config/collectd/common/client.conf:/etc/collectd/collectd.conf.d/client.conf
-        - ./config/collectd/common/debug.conf:/etc/collectd/collectd.conf.d/debug.conf
-        - ./config/collectd/common/mysql.conf:/etc/collectd/collectd.conf.d/mysql.conf
-        - ./config/collectd/common/os.conf:/etc/collectd/collectd.conf.d/os.conf
+        - ./config/collectd/apache.conf:/etc/collectd/collectd.conf.d/apache.conf
+        - ./config/collectd/client.conf:/etc/collectd/collectd.conf.d/client.conf
+        - ./config/collectd/debug.conf:/etc/collectd/collectd.conf.d/debug.conf
+        - ./config/collectd/mysql.conf:/etc/collectd/collectd.conf.d/mysql.conf
+        - ./config/collectd/os.conf:/etc/collectd/collectd.conf.d/os.conf
         - ./config/apache2/status.conf:/etc/apache2/conf-enabled/status.conf
 
   grafana:
