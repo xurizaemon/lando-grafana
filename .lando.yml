@@ -35,8 +35,9 @@ services:
       ports:
         - '3000'
     portforward: true
-#    volumes:
-#      - grafana_data:/var/lib/grafana
+    # @TODO: Persist Grafana data.
+    # volumes:
+    #   - grafana_data:/var/lib/grafana
 
   graphite:
     type: lando
