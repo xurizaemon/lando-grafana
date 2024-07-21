@@ -21,8 +21,11 @@ This environment is for demonstration purposes only; the intended use is to refe
 
 - Visit http://grafana.test.lndo.site/
 - Log in with `admin`/`admin`
+- Press "skip" to avoid changing password
 - Connections > Data source > Add new data source
-- Type "Graphite" with source URL `http://graphite.test.lndo.site:80`
+- Choose type "Graphite"
+  - Name is "Lando Graphite"
+  - Source URL is `http://graphite.test.lndo.site:80`
 - Explore data > Select "graphite" source
 - Try a query of `*.*.*` - you should get some stats
 
