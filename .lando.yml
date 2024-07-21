@@ -50,6 +50,7 @@ services:
         - '80'
         - '2003'
     portforward: true
+    # @TODO: Persist Graphite data.
     # volumes:
     #   - graphite_data:/opt/graphite/storage
 
