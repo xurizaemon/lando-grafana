@@ -1,0 +1,57 @@
+name: test
+recipe: lamp
+config:
+  webroot: web
+
+proxy:
+  grafana:
+    - grafana.test.lndo.site:3000
+  graphite:
+    - graphite.test.lndo.site:80
+
+
+services:
+  appserver:
+    build_as_root:
+      - apt update
+      - apt -y --no-install-recommends install collectd libmnl0
+    # run_as_root:
+    #   - collectd
+    overrides:
+      volumes:
+        - ./config/collectd/common/apache.conf:/etc/collectd/collectd.conf.d/apache.conf
+        - ./config/collectd/common/client.conf:/etc/collectd/collectd.conf.d/client.conf
+        - ./config/collectd/common/debug.conf:/etc/collectd/collectd.conf.d/debug.conf
+        - ./config/collectd/common/mysql.conf:/etc/collectd/collectd.conf.d/mysql.conf
+        - ./config/collectd/common/os.conf:/etc/collectd/collectd.conf.d/os.conf
+        - ./config/apache2/status.conf:/etc/apache2/conf-enabled/status.conf
+
+  grafana:
+    type: lando
+    api: 3
+    services:
+      image: grafana/grafana-enterprise:latest
+      command: /run.sh
+      ports:
+        - '3000'
+    portforward: true
+#    volumes:
+#      - grafana_data:/var/lib/grafana
+
+  graphite:
+    type: lando
+    api: 3
+    services:
+      user: root
+      image: graphiteapp/graphite-statsd
+      command: /entrypoint
+      ports:
+        - '80'
+        - '2003'
+    portforward: true
+    # volumes:
+    #   - graphite_data:/opt/graphite/storage
+
+volumes:
+  grafana_data: {}
+  graphite_data: {}
