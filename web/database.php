@@ -5,6 +5,17 @@ $dsn = 'mysql:host=database;dbname=lamp';
 $username = 'lamp';
 $password = 'lamp';
 
+if (rand(1, 20) === 1) {
+    header("HTTP/1.1 500 Internal Server Error");
+    die("Internal Server Error");
+}
+
+// Introduce a random delay about 1/5th of the time
+if (rand(1, 5) === 1) {
+    $delay = rand(1, 5); // Random delay between 1 and 5 seconds
+    sleep($delay);
+}
+
 try {
     // Create a PDO instance
     $pdo = new PDO($dsn, $username, $password);
