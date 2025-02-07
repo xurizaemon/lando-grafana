@@ -83,33 +83,43 @@ services:
     # volumes:
     #   - graphite_data:/opt/graphite/storage
 
-  mimir:
-    type: lando
+  # Port 3100
+  loki:
     api: 3
-    services:
-      user: root
-      image: grafana/mimir:latest
-      command: /
-      ports:
-        - '9009'
+    type: lando
     portforward: true
-    overrides:
+    services:
+      image: grafana/loki:latest
       volumes:
-        - ./config/mimir:/etc/mimir
+        - ./config/loki/loki.yaml:/etc/loki/local-config.yaml
 
-  tempo:
-    type: lando
-    api: 3
-    services:
-      user: root
-      image: grafana/tempo:latest
-      command: /entrypoint
-      ports:
-        - '9009'
-    portforward: true
-    overrides:
-      volumes:
-        - ./config/mimir:/etc/mimir
+#  # Port 9009
+#  # Volume /data/blocks, /data/tsdb, /data/rules
+#  mimir:
+#    api: 3
+#    type: lando
+#    portforward: true
+#    services:
+#      image: grafana/mimir:latest
+#      volumes:
+#        - ./config/mimir/mimir.yaml:/etc/mimir.yaml
+#      entrypoint:
+#        - /bin/mimir
+#        - config.file=/etc/mimir.yaml
+#
+#  # Ports 3200, 4317, 4318
+#  # Volumes /data/wal, /data/blocks
+#  tempo:
+#    api: 3
+#    type: lando
+#    portforward: true
+#    services:
+#      image: grafana/tempo:latest
+#      volumes:
+#        - ./lando/config/tempo/tempo.yaml:/etc/tempo.yaml
+#      command:
+#        - '-config.file=/etc/tempo.yaml'
+
 volumes:
   grafana_data: {}
   graphite_data: {}

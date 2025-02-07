@@ -2,13 +2,18 @@
 
 This environment demonstrates a LAMP stack with additional observability services.
 
-- The default Lando appserver has Collectd installed and configured to capture some metrics from the appserver environment, Apache and MySQL.
-- Alloy https://grafana.com/docs/alloy/latest/
-- Graphite 
-- Loki
-- Mimir
-- Tempo
-- Grafana
+This stack runs _alongside_ your existing development environments and is used to observe those environments.
+
+It provides:
+
+- [x] [Alloy](http://alloy.o11y.lndo.site/) ([Docs](https://grafana.com/docs/alloy/latest/))
+- [x] [Grafana](http://alloy.o11y.lndo.site/) ([Docs](https://grafana.com/docs/))
+- [x] [Graphite](http://graphite.o11y.lndo.site/) ([Docs](https://graphite.dev/docs/get-started))
+- [ ] [Loki](http://loki.o11y.lndo.site/) ([Docs](https://grafana.com/docs/loki/latest/?pg=oss-loki&plcmt=quick-links))
+- [ ] [Mimir](http://mimir.o11y.lndo.site/) ([Docs](https://github.com/grafana/mimir))
+- [ ] [Tempo](http://tempo.o11y.lndo.site/) ([Docs](https://github.com/grafana/tempo))
+
+It also contains an example environment which generates observability data and metrics.
 
 ## Usage
 
