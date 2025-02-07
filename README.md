@@ -11,7 +11,7 @@ It provides:
 - [x] [Graphite](http://graphite.o11y.lndo.site/) ([Docs](https://graphite.dev/docs/get-started))
 - [ ] [Loki](http://loki.o11y.lndo.site/) ([Docs](https://grafana.com/docs/loki/latest/?pg=oss-loki&plcmt=quick-links))
 - [ ] [Mimir](http://mimir.o11y.lndo.site/) ([Docs](https://github.com/grafana/mimir))
-- [ ] [Tempo](http://tempo.o11y.lndo.site/) ([Docs](https://github.com/grafana/tempo))
+- [ ] [Tempo](http://tempo.o11y.lndo.site/) ([Docs](https://grafana.com/docs/tempo/latest/))
 
 It also contains an example environment which generates observability data and metrics.
 
@@ -32,7 +32,7 @@ It also contains an example environment which generates observability data and m
 3. Configure Grafana
 4. Test it out
 
-### Configure Grafana
+### Setup
 
 - Visit http://grafana.test.lndo.site/
 - Log in with `admin`/`admin`
@@ -40,20 +40,38 @@ It also contains an example environment which generates observability data and m
 - Connections > Data source > Add new data source
 - Choose type "Graphite"
   - Name is "Lando Graphite"
-  - Source URL is `http://graphite.test.lndo.site:80`
+  - Source URL is `http://graphite.o11y.lndo.site:80`
 - Explore data > Select "graphite" source
 - Try a query of `*.*.*` - you should get some stats
 
-### This configuration
+### Provisioning
 
-This setup includes examples for:
+Where the heck did that go.
 
-- `config/collectd/apache.conf` - Collectd will _read_ data from Apache's `server-status` endpoint (this depends on Apache configuration addition in `config/apache2/status.conf`).
-- `config/collectd/graphite.conf` - Collectd will _write_ data to Graphite.
-- `config/collectd/debug.conf` - Collectd will _write_ debug info (useful for configuring Collectd).
-- `config/collectd/mysql.conf` - Collectd will _read_ MySQL performance and stats from the `database` service.
-- `config/collectd/nginx.conf` - TBC
-- `config/collectd/os.conf` - Collectd will _read_ OS metrics.
+- Provision data sources
+- Provision dashboards
+
+### Service configurations
+
+### Tempo
+
+- Root shell: `lando ssh -s tempo -u root -c '/busybox/busybox sh'`
+
+### Gathering data
+
+Examples are in this repository which you should mirror in your project environment.
+
+#### Collectd 
+
+Configure Collectd in a Lando environment to gather metrics. See `appserver` example in this project for build steps and packages.
+
+`config/collectd/`:
+- `apache.conf` - Collectd will _read_ data from Apache's `server-status` endpoint (this depends on Apache configuration addition in `config/apache2/status.conf`).
+- `graphite.conf` - Collectd will _write_ data to Graphite.
+- `debug.conf` - Collectd will _write_ debug info (useful for configuring Collectd).
+- `mysql.conf` - Collectd will _read_ MySQL performance and stats from the `database` service.
+- `nginx.conf` - TBC
+- `os.conf` - Collectd will _read_ OS metrics.
 
 ### Test it out
 

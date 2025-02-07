@@ -22,22 +22,17 @@ variables:
 
 services:
   appserver:
-    build_as_root:
-      - apt update
-      - apt -y --no-install-recommends install collectd libmnl0
+#    build_as_root:
+#      - apt update
+#      - apt -y --no-install-recommends install collectd libmnl0
     config:
-      vhosts: config/apache2/default.conf
+      vhosts: config/example/apache2/default.conf
     run_as_root:
       - collectd
     overrides:
       volumes:
-        - ./config/collectd/apache.conf:/etc/collectd/collectd.conf.d/apache.conf
-        - ./config/collectd/client.conf:/etc/collectd/collectd.conf.d/client.conf
-        - ./config/collectd/debug.conf:/etc/collectd/collectd.conf.d/debug.conf
-        - ./config/collectd/mysql.conf:/etc/collectd/collectd.conf.d/mysql.conf
-        - ./config/collectd/os.conf:/etc/collectd/collectd.conf.d/os.conf
-        - ./config/apache2/logformat.conf:/etc/apache2/conf-enabled/logformat.conf
-        - ./config/apache2/status.conf:/etc/apache2/conf-enabled/status.conf
+        - ./config/example/collectd:/etc/collectd/collectd.conf.d
+        - ./config/example/apache2/status.conf:/etc/apache2/conf-enabled/status.conf
 
   alloy:
     type: lando
@@ -120,6 +115,29 @@ services:
 #      command:
 #        - '-config.file=/etc/tempo.yaml'
 
+  # Ports 3200, 4317, 4318
+  tempo:
+    type: lando
+    api: 3
+    services:
+      image: grafana/tempo:latest
+      user: '${UID:-}:${GID:-}'
+      command:
+      ports:
+        - '3200'  # tempo
+        - '9095'  # tempo grpc
+        - '4317'  # otlp grpc
+        - '4318'  # otlp http
+        - '9411'  # zipkin
+        - '14268' # jaeger ingest
+    portforward: true
+    overrides:
+      entrypoint: ['/tempo', '-config.file=/etc/tempo.yaml']
+      volumes:
+        - ./config/tempo/tempo.yaml:/etc/tempo.yaml
+        - tempo_data:/data
+
 volumes:
   grafana_data: {}
   graphite_data: {}
+  tempo_data: {}
