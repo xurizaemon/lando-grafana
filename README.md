@@ -10,7 +10,7 @@ It provides:
 - [x] [Grafana](http://alloy.o11y.lndo.site/) ([Docs](https://grafana.com/docs/))
 - [x] [Graphite](http://graphite.o11y.lndo.site/) ([Docs](https://graphite.dev/docs/get-started))
 - [ ] [Loki](http://loki.o11y.lndo.site/) ([Docs](https://grafana.com/docs/loki/latest/?pg=oss-loki&plcmt=quick-links))
-- [ ] [Mimir](http://mimir.o11y.lndo.site/) ([Docs](https://github.com/grafana/mimir))
+- [x] [Mimir](http://mimir.o11y.lndo.site/) ([Docs](https://github.com/grafana/mimir))
 - [ ] [Tempo](http://tempo.o11y.lndo.site/) ([Docs](https://grafana.com/docs/tempo/latest/))
 
 It also contains an example environment which generates observability data and metrics.

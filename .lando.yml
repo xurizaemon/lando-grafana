@@ -13,12 +13,12 @@ proxy:
   loki:
     - loki.o11y.lndo.site:3100
   mimir:
-    - mimir.o11y.lndo.site:9009
+    - mimir.o11y.lndo.site:8080
   tempo:
     - tempo.o11y.lndo.site:80
 
 variables:
-  OTEL_EXPORTER_OTLP_ENDPOINT: http://opentelemetry-grafana:4318
+  OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo.o11y.lndo.site:4318
 
 services:
   appserver:
@@ -78,66 +78,59 @@ services:
     # volumes:
     #   - graphite_data:/opt/graphite/storage
 
-  # Port 3100
-  loki:
-    api: 3
-    type: lando
-    portforward: true
-    services:
-      image: grafana/loki:latest
-      volumes:
-        - ./config/loki/loki.yaml:/etc/loki/local-config.yaml
-
-#  # Port 9009
-#  # Volume /data/blocks, /data/tsdb, /data/rules
-#  mimir:
+#  # Port 3100
+#  loki:
 #    api: 3
 #    type: lando
 #    portforward: true
 #    services:
-#      image: grafana/mimir:latest
+#      image: grafana/loki:latest
 #      volumes:
-#        - ./config/mimir/mimir.yaml:/etc/mimir.yaml
-#      entrypoint:
-#        - /bin/mimir
-#        - config.file=/etc/mimir.yaml
-#
+#        - ./config/loki/loki.yaml:/etc/loki/local-config.yaml
+
+  # Port 9009
+  # Volume /data/blocks, /data/tsdb, /data/rules
+  mimir:
+    api: 3
+    type: lando
+    portforward: true
+    services:
+      image: grafana/mimir:latest
+      volumes:
+        - ./config/mimir/mimir.yaml:/etc/mimir.yaml
+    overrides:
+      entrypoint:
+        - /bin/mimir
+        - config.file=/etc/mimir.yaml
+      environment:
+        - VIRTUAL_HOST=*
+        - HTTP_EXPOSE=9009:9009
+        - HTTPS_EXPOSE=9009:9009
+
 #  # Ports 3200, 4317, 4318
-#  # Volumes /data/wal, /data/blocks
 #  tempo:
-#    api: 3
 #    type: lando
-#    portforward: true
+#    api: 3
 #    services:
 #      image: grafana/tempo:latest
-#      volumes:
-#        - ./lando/config/tempo/tempo.yaml:/etc/tempo.yaml
+#      user: '${UID:-}:${GID:-}'
 #      command:
-#        - '-config.file=/etc/tempo.yaml'
-
-  # Ports 3200, 4317, 4318
-  tempo:
-    type: lando
-    api: 3
-    services:
-      image: grafana/tempo:latest
-      user: '${UID:-}:${GID:-}'
-      command:
-      ports:
-        - '3200'  # tempo
-        - '9095'  # tempo grpc
-        - '4317'  # otlp grpc
-        - '4318'  # otlp http
-        - '9411'  # zipkin
-        - '14268' # jaeger ingest
-    portforward: true
-    overrides:
-      entrypoint: ['/tempo', '-config.file=/etc/tempo.yaml']
-      volumes:
-        - ./config/tempo/tempo.yaml:/etc/tempo.yaml
-        - tempo_data:/data
+#      ports:
+#        - '3200'  # tempo
+#        - '9095'  # tempo grpc
+#        - '4317'  # otlp grpc
+#        - '4318'  # otlp http
+#        - '9411'  # zipkin
+#        - '14268' # jaeger ingest
+#    portforward: true
+#    overrides:
+#      entrypoint: ['/tempo', '-config.file=/etc/tempo.yaml']
+#      volumes:
+#        - ./config/tempo/tempo.yaml:/etc/tempo.yaml
+#        - tempo_data:/data
 
 volumes:
   grafana_data: {}
   graphite_data: {}
+  mimir_data: {}
   tempo_data: {}
