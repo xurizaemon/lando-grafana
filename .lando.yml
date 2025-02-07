@@ -44,11 +44,14 @@ services:
     api: 3
     services:
       image: grafana/alloy:latest
-      command: /run.sh
+      command: /bin/alloy run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data --stability.level=experimental /etc/alloy
       ports:
         - '12345'
-    portforward: true
     overrides:
+      environment:
+        - VIRTUAL_HOST='o11y.lndo.site'
+        - HTTP_EXPOSE=12345:12345,4317:4317,4318:4318,9411:9411,14268:14268
+        - HTTPS_EXPOSE=12345:12345,4317:4317,4318:4318,9411:9411,14268:14268
       volumes:
         - ./config/alloy/config.alloy:/etc/alloy/config.alloy
 
