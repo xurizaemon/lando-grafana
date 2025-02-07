@@ -22,9 +22,9 @@ variables:
 
 services:
   appserver:
-#    build_as_root:
-#      - apt update
-#      - apt -y --no-install-recommends install collectd libmnl0
+    build_as_root:
+      - apt update
+      - apt -y --no-install-recommends install collectd libmnl0
     config:
       vhosts: config/example/apache2/default.conf
     run_as_root:
