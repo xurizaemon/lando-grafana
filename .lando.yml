@@ -1,14 +1,24 @@
-name: test
+name: o11y
 recipe: lamp
 config:
   webroot: web
 
 proxy:
+  alloy:
+    - alloy.o11y.lndo.site:12345
   grafana:
-    - grafana.test.lndo.site:3000
+    - grafana.o11y.lndo.site:3000
   graphite:
-    - graphite.test.lndo.site:80
+    - graphite.o11y.lndo.site:80
+  loki:
+    - loki.o11y.lndo.site:3100
+  mimir:
+    - mimir.o11y.lndo.site:9009
+  tempo:
+    - tempo.o11y.lndo.site:80
 
+variables:
+  OTEL_EXPORTER_OTLP_ENDPOINT: http://opentelemetry-grafana:4318
 
 services:
   appserver:
@@ -28,6 +38,19 @@ services:
         - ./config/collectd/os.conf:/etc/collectd/collectd.conf.d/os.conf
         - ./config/apache2/logformat.conf:/etc/apache2/conf-enabled/logformat.conf
         - ./config/apache2/status.conf:/etc/apache2/conf-enabled/status.conf
+
+  alloy:
+    type: lando
+    api: 3
+    services:
+      image: grafana/alloy:latest
+      command: /run.sh
+      ports:
+        - '12345'
+    portforward: true
+    overrides:
+      volumes:
+        - ./config/alloy/config.alloy:/etc/alloy/config.alloy
 
   grafana:
     type: lando
@@ -57,6 +80,33 @@ services:
     # volumes:
     #   - graphite_data:/opt/graphite/storage
 
+  mimir:
+    type: lando
+    api: 3
+    services:
+      user: root
+      image: grafana/mimir:latest
+      command: /
+      ports:
+        - '9009'
+    portforward: true
+    overrides:
+      volumes:
+        - ./config/mimir:/etc/mimir
+
+  tempo:
+    type: lando
+    api: 3
+    services:
+      user: root
+      image: grafana/tempo:latest
+      command: /entrypoint
+      ports:
+        - '9009'
+    portforward: true
+    overrides:
+      volumes:
+        - ./config/mimir:/etc/mimir
 volumes:
   grafana_data: {}
   graphite_data: {}

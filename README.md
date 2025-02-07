@@ -1,14 +1,24 @@
 # Grafana and Graphite in Lando
 
-This environment demonstrates a LAMP stack with additional Grafana and Graphite services.
+This environment demonstrates a LAMP stack with additional observability services.
 
-The LAMP appserver has Collectd installed and configured to capture some metrics from the appserver environment, Apache and MySQL.
+- The default Lando appserver has Collectd installed and configured to capture some metrics from the appserver environment, Apache and MySQL.
+- Alloy https://grafana.com/docs/alloy/latest/
+- Graphite 
+- Loki
+- Mimir
+- Tempo
+- Grafana
 
-This environment is for demonstration purposes only; the intended use is to refer to this when configuring a Lando project to add Grafana support.
+## Usage
+
+- Bring this environment up.
+- Configure observability reporting on other local Lando projects
+- Observe & interact
 
 ## Requirements
 
-- A functioning Lando environment
+- Lando, Docker
 
 ## Setup
 
@@ -42,65 +52,12 @@ This setup includes examples for:
 
 ### Test it out
 
-Most likely this is useful if you copy the configuration here into an existing application to test.
+Most likely this is useful if you set up OTel reporting in an adjacent environment and use this project to observe that project.
 
-If you're testing with this repo "as-is", you might like to modify `index.php` so that it generates errors occasionally, or test the `database.php` script. You can send lots of requests to the server by using a tool such as `ab` (from the `apache2-utils` package):
+This project contains an appserver service which is configured to gather metrics and observability data also. 
+
+An example `index.php` and `database.php` are provided to generate some activity which can be observed.
 
 ```bash
-$ ab -n 1000 -c 25 https://test.lndo.site/database.php
-This is ApacheBench, Version 2.3 <$Revision: 1879490 $>
-Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
-Licensed to The Apache Software Foundation, http://www.apache.org/
-
-Benchmarking test.lndo.site (be patient)
-Completed 100 requests
-Completed 200 requests
-Completed 300 requests
-Completed 400 requests
-Completed 500 requests
-Completed 600 requests
-Completed 700 requests
-Completed 800 requests
-Completed 900 requests
-Completed 1000 requests
-Finished 1000 requests
-
-Server Software:        Apache/2.4.54
-Server Hostname:        test.lndo.site
-Server Port:            443
-SSL/TLS Protocol:       TLSv1.2,ECDHE-RSA-AES256-GCM-SHA384,2048,256
-Server Temp Key:        X25519 253 bits
-TLS Server Name:        test.lndo.site
-
-Document Path:          /database.php
-Document Length:        83 bytes
-
-Concurrency Level:      25
-Time taken for tests:   21.760 seconds
-Complete requests:      1000
-Failed requests:        0
-Total transferred:      280000 bytes
-HTML transferred:       83000 bytes
-Requests per second:    45.96 [#/sec] (mean)
-Time per request:       544.000 [ms] (mean)
-Time per request:       21.760 [ms] (mean, across all concurrent requests)
-Transfer rate:          12.57 [Kbytes/sec] received
-
-Connection Times (ms)
-              min  mean[+/-sd] median   max
-Connect:        3    7   4.1      5      30
-Processing:    89  529 502.0    358    4050
-Waiting:       87  529 502.0    358    4049
-Total:         92  536 503.3    363    4076
-
-Percentage of the requests served within a certain time (ms)
-  50%    363
-  66%    511
-  75%    664
-  80%    754
-  90%   1056
-  95%   1391
-  98%   1987
-  99%   2754
- 100%   4076 (longest request)
+$ ab -n 1000 -c 25 https://o11y.lndo.site/database.php
 ```
