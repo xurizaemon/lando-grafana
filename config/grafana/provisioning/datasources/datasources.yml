@@ -1,7 +1,22 @@
 apiVersion: 1
 
 datasources:
-  - name: Logs
+  - name: Graphite
+    uid: graphite
+    type: graphite
+    access: proxy
+    orgId: 1
+    url: http://graphite.o11y.lndo.site
+    # basicAuth: false
+    isDefault: false
+    version: 9
+    editable: false
+    apiVersion: 1
+    jsonData:
+      graphiteType: default
+      graphiteVersion: "1.1"
+
+  - name: Loki
     uid: loki
     type: loki
     access: proxy
@@ -19,7 +34,7 @@ datasources:
           name: trace_id
           url: "$${__value.raw}"
 
-  - name: Metrics
+  - name: Mimir
     uid: mimir
     type: prometheus
     access: proxy
@@ -37,7 +52,7 @@ datasources:
       # tlsSkipVerify: true
       # timeout: 30
 
-  - name: Traces
+  - name: Tempo
     uid: tempo
     type: tempo
     access: proxy
