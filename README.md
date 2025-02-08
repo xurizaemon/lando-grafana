@@ -7,11 +7,11 @@ This stack runs _alongside_ your existing development environments and is used t
 It provides:
 
 - [x] [Alloy](http://alloy.o11y.lndo.site/) ([Docs](https://grafana.com/docs/alloy/latest/))
-- [x] [Grafana](http://alloy.o11y.lndo.site/) ([Docs](https://grafana.com/docs/))
+- [x] [Grafana](http://grafana.o11y.lndo.site/) ([Docs](https://grafana.com/docs/))
 - [x] [Graphite](http://graphite.o11y.lndo.site/) ([Docs](https://graphite.dev/docs/get-started))
 - [ ] [Loki](http://loki.o11y.lndo.site/) ([Docs](https://grafana.com/docs/loki/latest/?pg=oss-loki&plcmt=quick-links))
 - [x] [Mimir](http://mimir.o11y.lndo.site/) ([Docs](https://github.com/grafana/mimir))
-- [ ] [Tempo](http://tempo.o11y.lndo.site/) ([Docs](https://grafana.com/docs/tempo/latest/))
+- [ ] Tempo (Grafana source: `http://tempo.o11y.internal:3200`) ([Docs](https://grafana.com/docs/tempo/latest/))
 
 It also contains an example environment which generates observability data and metrics.
 
@@ -53,9 +53,16 @@ Where the heck did that go.
 
 ### Service configurations
 
+### Mimir
+
+Listens on port :8080 internally.
+
+> mimir_1  | ts=2025-02-08T18:20:39.456151809Z caller=server.go:351 level=info msg="server listening on addresses" http=[::]:8080 grpc=[::]:9095
+
 ### Tempo
 
 - Root shell: `lando ssh -s tempo -u root -c '/busybox/busybox sh'`
+- Is a source in Grafana, not exposed as a web UI
 
 ### Gathering data
 
