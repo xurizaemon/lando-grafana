@@ -96,9 +96,12 @@ services:
   mimir:
     api: 3
     type: lando
+    ports:
+      - '9009'
     portforward: true
     services:
       image: grafana/mimir:latest
+      command: '/busybox/busybox sh'
       volumes:
         - ./config/mimir/mimir.yaml:/etc/mimir.yaml
     overrides:
@@ -114,6 +117,7 @@ services:
     api: 3
     services:
       image: grafana/tempo:latest
+      command: '/busybox/busybox sh'
       user: root
       ports:
         - "3200"  # tempo
@@ -121,9 +125,11 @@ services:
         - "4317"  # otlp grpc
         - "4318"  # otlp http
     scanner:
-      retry: 5
+      disabled: true
     overrides:
-      entrypoint: ['/tempo', '-config.file=/etc/tempo.yaml']
+      entrypoint:
+        - '/tempo'
+        - '-config.file=/etc/tempo.yaml'
       volumes:
         - ./config/tempo/tempo.yaml:/etc/tempo.yaml
         - tempo_data:/data

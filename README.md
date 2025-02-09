@@ -59,6 +59,8 @@ A data source is provisioned to Grafana to access Loki data.
 
 ### Mimir
 
+Mimir provides horizontally scalable, highly available, multi-tenant, long-term storage for Prometheus and OpenTelemetry metrics.
+
 Listens on port :8080 internally.
 
 > mimir_1  | ts=2025-02-08T18:20:39.456151809Z caller=server.go:351 level=info msg="server listening on addresses" http=[::]:8080 grpc=[::]:9095
