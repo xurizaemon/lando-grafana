@@ -41,17 +41,21 @@ It also contains an example environment which generates observability data and m
 - Choose type "Graphite"
   - Name is "Lando Graphite"
   - Source URL is `http://graphite.o11y.lndo.site:80`
-- Explore data > Select "graphite" source
+- Explore data > Select "Graphite" source
 - Try a query of `*.*.*` - you should get some stats
 
 ### Provisioning
 
-Where the heck did that go.
-
-- Provision data sources
-- Provision dashboards
+- Data sources are provisioned for Graphite, Loki, Mimir, and Tempo 
+- [ ] Provision dashboards
 
 ### Service configurations
+
+### Loki
+
+Loki is a set of open source components that can be composed into a fully featured logging stack.
+
+A data source is provisioned to Grafana to access Loki data.
 
 ### Mimir
 
@@ -61,8 +65,11 @@ Listens on port :8080 internally.
 
 ### Tempo
 
+Tempo is an open-source, easy-to-use, and high-scale distributed tracing backend. Tempo lets you search for traces, generate metrics from spans, and link your tracing data with logs and metrics.
+
+A data source is provisioned to Grafana to access Tempo data.
+
 - Root shell: `lando ssh -s tempo -u root -c '/busybox/busybox sh'`
-- Is a source in Grafana, not exposed as a web UI
 
 ### Gathering data
 

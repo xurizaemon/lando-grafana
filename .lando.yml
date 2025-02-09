@@ -16,7 +16,7 @@ proxy:
     - mimir.o11y.lndo.site:8080
 
 variables:
-  OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo.o11y.lndo.site:4318
+  OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo.o11y.internal:4318
 
 services:
   appserver:
@@ -116,10 +116,10 @@ services:
       image: grafana/tempo:latest
       user: root
       ports:
-        - "3200:3200"  # tempo
-        - "9095:9095"  # tempo grpc
-        - "4317:4317"  # otlp grpc
-        - "4318:4318"  # otlp http
+        - "3200"  # tempo
+        - "9095"  # tempo grpc
+        - "4317"  # otlp grpc
+        - "4318"  # otlp http
     scanner:
       retry: 5
     overrides:
