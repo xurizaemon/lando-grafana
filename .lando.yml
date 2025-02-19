@@ -54,6 +54,7 @@ services:
         - '3000'
       volumes:
         - ./config/grafana/provisioning:/etc/grafana/provisioning
+        - ./config/grafana/dashboards:/etc/grafana/dashboards
     portforward: true
 
   graphite:
