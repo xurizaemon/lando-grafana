@@ -29,7 +29,15 @@ services:
       - collectd
     overrides:
       volumes:
-        - ./config/example/collectd:/etc/collectd/collectd.conf.d
+        - ./config/example/collectd/appserver/apache.conf:/etc/collectd/collectd.conf.d/apache.conf
+        - ./config/example/collectd/appserver/client.conf:/etc/collectd/collectd.conf.d/client.conf
+        - ./config/example/collectd/appserver/hostname.conf:/etc/collectd/collectd.conf.d/hostname.conf
+        - ./config/example/collectd/appserver/mysql.conf:/etc/collectd/collectd.conf.d/mysql.conf
+        - ./config/example/collectd/appserver/nginx.conf:/etc/collectd/collectd.conf.d/nginx.conf
+        - ./config/example/collectd/common/debug.conf:/etc/collectd/collectd.conf.d/debug.conf
+        - ./config/example/collectd/common/filters.conf:/etc/collectd/collectd.conf.d/filters.conf
+        - ./config/example/collectd/common/os.conf:/etc/collectd/collectd.conf.d/os.conf
+        - ./config/example/collectd/common/thresholds.conf:/etc/collectd/collectd.conf.d/thresholds.conf
         - ./config/example/apache2/status.conf:/etc/apache2/conf-enabled/status.conf
 
   alloy:
