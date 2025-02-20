@@ -3185,6 +3185,10 @@
             "$__all"
           ]
         },
+        "datasource": {
+          "type": "graphite",
+          "uid": "graphite"
+        },
         "definition": "",
         "includeAll": true,
         "multi": true,
