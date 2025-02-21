@@ -1,0 +1,20 @@
+name: Lando Start
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Out Project
+        uses: actions/checkout@v4
+      - name: Set Up Lando
+        uses: lando/setup-lando@v3
+      - name: Lando Start
+        run: lando start --debug
