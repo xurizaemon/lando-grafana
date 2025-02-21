@@ -58,7 +58,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -128,7 +129,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "#EAB839",
@@ -212,7 +214,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "#73BF69"
+                "color": "#73BF69",
+                "value": null
               },
               {
                 "color": "rgba(237, 129, 40, 0.89)",
@@ -294,7 +297,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -372,7 +376,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -441,7 +446,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "#EAB839",
@@ -483,24 +489,25 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "type": "graphite",
+            "uid": "graphite"
           },
-          "hide": false,
           "refCount": 0,
           "refId": "A",
-          "target": "asPercent(sumSeries(keepLastValue(exclude(lando.$server.cpu-*.percent-*, 'idle'), INF)), #B)",
-          "targetFull": "asPercent(sumSeries(keepLastValue(exclude(lando.$server.cpu-*.percent-*, 'idle'), INF)), sumSeries(keepLastValue(lando.$server.cpu-*.percent-*, INF)))",
-          "textEditor": false
+          "target": "asPercent(sumSeries(keepLastValue(exclude(lando.$server.cpu.percent-*, 'idle'), INF)), #B)",
+          "targetFull": "asPercent(sumSeries(keepLastValue(exclude(lando.$server.cpu.percent-*, 'idle'), INF)), sumSeries(keepLastValue(lando.$server.cpu.percent-*, INF)))",
+          "textEditor": true
         },
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "type": "graphite",
+            "uid": "graphite"
           },
           "hide": true,
           "refCount": 0,
           "refId": "B",
-          "target": "sumSeries(keepLastValue(lando.$server.cpu-*.percent-*, INF))",
-          "textEditor": false
+          "target": "sumSeries(keepLastValue(lando.$server.cpu.percent-*, INF))",
+          "textEditor": true
         }
       ],
       "title": "CPU Usage",
@@ -524,7 +531,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "#EAB839",
@@ -607,7 +615,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "#EAB839",
@@ -687,7 +696,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "#EAB839",
@@ -777,7 +787,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "#EAB839",
@@ -876,7 +887,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "#299c46"
+                "color": "#299c46",
+                "value": null
               },
               {
                 "color": "rgba(237, 129, 40, 0.89)",
@@ -956,7 +968,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "#299c46"
+                "color": "#299c46",
+                "value": null
               },
               {
                 "color": "rgba(237, 129, 40, 0.89)",
@@ -1262,7 +1275,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1378,7 +1392,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1487,7 +1502,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1597,7 +1613,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1695,7 +1712,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2665,7 +2683,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2771,7 +2790,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2877,7 +2897,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2994,7 +3015,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3089,7 +3111,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
