@@ -100,7 +100,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "refCount": 0,
           "refId": "A",
@@ -181,7 +181,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "refCount": 0,
           "refId": "A",
@@ -260,7 +260,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "refCount": 0,
           "refId": "A",
@@ -339,7 +339,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "refCount": 0,
           "refId": "A",
@@ -418,7 +418,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "refCount": 0,
           "refId": "A",
@@ -574,7 +574,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": false,
           "refCount": 0,
@@ -585,7 +585,7 @@
         },
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": true,
           "refCount": 0,
@@ -658,7 +658,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": false,
           "refCount": 0,
@@ -669,7 +669,7 @@
         },
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": true,
           "refCount": 0,
@@ -739,7 +739,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": true,
           "refCount": 0,
@@ -749,7 +749,7 @@
         },
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": true,
           "refCount": 0,
@@ -759,7 +759,7 @@
         },
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": false,
           "refCount": 0,
@@ -830,7 +830,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": true,
           "refCount": 1,
@@ -840,7 +840,7 @@
         },
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": true,
           "refCount": 1,
@@ -850,7 +850,7 @@
         },
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": false,
           "refCount": 0,
@@ -933,7 +933,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": false,
           "refCount": 0,
@@ -1014,7 +1014,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "refCount": 0,
           "refId": "A",
@@ -1315,7 +1315,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": false,
           "refCount": 0,
@@ -1325,7 +1325,7 @@
         },
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "refCount": 0,
           "refId": "B",
@@ -1333,7 +1333,7 @@
         },
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "refCount": 0,
           "refId": "C",
@@ -1432,7 +1432,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": false,
           "refCount": 0,
@@ -1442,7 +1442,7 @@
         },
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": true,
           "refCount": 0,
@@ -1542,7 +1542,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": false,
           "refCount": 0,
@@ -1651,7 +1651,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": false,
           "refCount": 0,
@@ -1750,7 +1750,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": false,
           "refCount": 0,
@@ -1857,7 +1857,7 @@
           "targets": [
             {
               "datasource": {
-                "uid": "${DS_GRAPHITE}"
+                "uid": "graphite"
               },
               "hide": true,
               "refCount": 1,
@@ -1867,7 +1867,7 @@
             },
             {
               "datasource": {
-                "uid": "${DS_GRAPHITE}"
+                "uid": "graphite"
               },
               "hide": true,
               "refCount": 1,
@@ -1877,7 +1877,7 @@
             },
             {
               "datasource": {
-                "uid": "${DS_GRAPHITE}"
+                "uid": "graphite"
               },
               "hide": false,
               "refCount": 0,
@@ -1973,7 +1973,7 @@
           "targets": [
             {
               "datasource": {
-                "uid": "${DS_GRAPHITE}"
+                "uid": "graphite"
               },
               "hide": true,
               "refCount": 1,
@@ -1983,7 +1983,7 @@
             },
             {
               "datasource": {
-                "uid": "${DS_GRAPHITE}"
+                "uid": "graphite"
               },
               "hide": true,
               "refCount": 1,
@@ -1993,7 +1993,7 @@
             },
             {
               "datasource": {
-                "uid": "${DS_GRAPHITE}"
+                "uid": "graphite"
               },
               "hide": false,
               "refCount": 0,
@@ -2089,7 +2089,7 @@
           "targets": [
             {
               "datasource": {
-                "uid": "${DS_GRAPHITE}"
+                "uid": "graphite"
               },
               "refCount": 0,
               "refId": "A",
@@ -2098,7 +2098,7 @@
             },
             {
               "datasource": {
-                "uid": "${DS_GRAPHITE}"
+                "uid": "graphite"
               },
               "refCount": 0,
               "refId": "B",
@@ -2192,7 +2192,7 @@
           "targets": [
             {
               "datasource": {
-                "uid": "${DS_GRAPHITE}"
+                "uid": "graphite"
               },
               "hide": false,
               "refCount": 0,
@@ -2202,7 +2202,7 @@
             },
             {
               "datasource": {
-                "uid": "${DS_GRAPHITE}"
+                "uid": "graphite"
               },
               "hide": false,
               "refCount": 0,
@@ -2297,7 +2297,7 @@
           "targets": [
             {
               "datasource": {
-                "uid": "${DS_GRAPHITE}"
+                "uid": "graphite"
               },
               "refCount": 0,
               "refId": "A",
@@ -2391,7 +2391,7 @@
           "targets": [
             {
               "datasource": {
-                "uid": "${DS_GRAPHITE}"
+                "uid": "graphite"
               },
               "refCount": 0,
               "refId": "A",
@@ -2400,7 +2400,7 @@
             },
             {
               "datasource": {
-                "uid": "${DS_GRAPHITE}"
+                "uid": "graphite"
               },
               "refCount": 0,
               "refId": "B",
@@ -2494,7 +2494,7 @@
           "targets": [
             {
               "datasource": {
-                "uid": "${DS_GRAPHITE}"
+                "uid": "graphite"
               },
               "refCount": 0,
               "refId": "A",
@@ -2503,7 +2503,7 @@
             },
             {
               "datasource": {
-                "uid": "${DS_GRAPHITE}"
+                "uid": "graphite"
               },
               "refCount": 0,
               "refId": "B",
@@ -2597,7 +2597,7 @@
           "targets": [
             {
               "datasource": {
-                "uid": "${DS_GRAPHITE}"
+                "uid": "graphite"
               },
               "refCount": 0,
               "refId": "A",
@@ -2606,7 +2606,7 @@
             },
             {
               "datasource": {
-                "uid": "${DS_GRAPHITE}"
+                "uid": "graphite"
               },
               "hide": false,
               "refCount": 0,
@@ -2720,7 +2720,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": false,
           "refCount": 0,
@@ -2730,7 +2730,7 @@
         },
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": false,
           "refCount": 0,
@@ -2827,7 +2827,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": false,
           "refCount": 0,
@@ -2837,7 +2837,7 @@
         },
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "hide": false,
           "refCount": 0,
@@ -2934,7 +2934,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "refCount": 0,
           "refId": "A",
@@ -2943,7 +2943,7 @@
         },
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "refCount": 0,
           "refId": "B",
@@ -3052,7 +3052,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "refCount": 0,
           "refId": "A",
@@ -3148,7 +3148,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_GRAPHITE}"
+            "uid": "graphite"
           },
           "refCount": 0,
           "refId": "A",
