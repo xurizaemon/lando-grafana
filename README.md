@@ -77,17 +77,27 @@ A data source is provisioned to Grafana to access Tempo data.
 
 Examples are in this repository which you should mirror in your project environment.
 
-#### Collectd 
+#### CollectD (service metrics)
 
 Configure Collectd in a Lando environment to gather metrics. See `appserver` example in this project for build steps and packages.
 
-`config/collectd/`:
+`config/collectd/{appserver,common,database}`:
 - `apache.conf` - Collectd will _read_ data from Apache's `server-status` endpoint (this depends on Apache configuration addition in `config/apache2/status.conf`).
 - `graphite.conf` - Collectd will _write_ data to Graphite.
 - `debug.conf` - Collectd will _write_ debug info (useful for configuring Collectd).
 - `mysql.conf` - Collectd will _read_ MySQL performance and stats from the `database` service.
 - `nginx.conf` - TBC
 - `os.conf` - Collectd will _read_ OS metrics.
+
+### Generating OpenTelemetry data
+
+To test OpenTelemetry data collection, we can use [telemetrygen](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/cmd/telemetrygen/v0.88.1/cmd/telemetrygen).
+
+```
+go install github.com/open-telemetry/opentelemetry-collector-contrib/cmd/telemetrygen@latest
+export OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo.o11y.internal:4318
+
+```
 
 ### Test it out
 
