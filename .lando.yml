@@ -32,7 +32,7 @@ services:
         - ./config/example/apache2/status.conf:/etc/apache2/conf-enabled/status.conf
         - ./config/example/collectd/collectd.conf.d/common.conf:/etc/collectd/collectd.conf.d/10-common.conf
         - ./config/example/collectd/collectd.conf.d/appserver.conf:/etc/collectd/collectd.conf.d/20-appserver.conf
-        - data_apache_logs:/var/log/apache2
+        - apache_logs_data:/var/log/apache2
 
   database:
     build_as_root:
@@ -59,7 +59,7 @@ services:
       volumes:
         - ./config/alloy/config.alloy:/etc/alloy/config.alloy
         # Make appserver logs available to Alloy.
-        - data_apache_logs:/var/log/apache2
+        - apache_logs_data:/var/log/apache2
 
   grafana:
     type: lando
@@ -104,7 +104,7 @@ services:
         - ./config/loki/loki.yaml:/etc/loki/local-config.yaml
         - data_loki:/data
         # Make appserver logs available to Loki.
-        - data_apache_logs:/var/log/apache2
+        - apache_logs_data:/var/log/apache2
     overrides:
       entrypoint:
         - '/usr/bin/loki'
@@ -170,3 +170,4 @@ volumes:
   loki_data: {}
   mimir_data: {}
   tempo_data: {}
+  apache_logs_data: {}

@@ -97,9 +97,9 @@ To test OpenTelemetry data collection, we can use [telemetrygen](https://github.
 
 ```
 lando ssh -s telemetrygen
-telemetrygen traces --otlp-endpoint alloy.o11y.internal:4317 --otlp-insecure --duration 5s
 telemetrygen logs --otlp-endpoint alloy.o11y.internal:4317 --otlp-insecure --duration 5s
-
+telemetrygen metrics --otlp-endpoint alloy.o11y.internal:4317 --otlp-insecure --duration 5s
+telemetrygen traces --otlp-endpoint alloy.o11y.internal:4317 --otlp-insecure --duration 5s
 ```
 
 ### Test it out
