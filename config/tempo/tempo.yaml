@@ -21,11 +21,13 @@ distributor:
       protocols:
         # OTLP HTTP on port 4318
         http:
+          endpoint: 0.0.0.0:4318
           cors:
             allowed_origins:
               - "*"
         # OTLP GRPC on port 4317
-#        grpc:
+        grpc:
+          endpoint: 0.0.0.0:4317
 #    opencensus:
 
 storage:

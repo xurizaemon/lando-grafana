@@ -11,7 +11,7 @@ It provides:
 - [x] [Graphite](http://graphite.o11y.lndo.site/) ([Docs](https://graphite.dev/docs/get-started))
 - [ ] [Loki](http://loki.o11y.lndo.site/) ([Docs](https://grafana.com/docs/loki/latest/?pg=oss-loki&plcmt=quick-links))
 - [x] [Mimir](http://mimir.o11y.lndo.site/) ([Docs](https://github.com/grafana/mimir))
-- [ ] Tempo (Grafana source: `http://tempo.o11y.internal:3200`) ([Docs](https://grafana.com/docs/tempo/latest/))
+- [x] Tempo ([Docs](https://grafana.com/docs/tempo/latest/))
 
 It also contains an example environment which generates observability data and metrics.
 
@@ -29,49 +29,51 @@ It also contains an example environment which generates observability data and m
 
 1. Clone this repository
 2. `lando start`
-3. Configure Grafana
-4. Test it out
+3. Check it out
 
 ### Setup
 
 - Visit http://grafana.test.lndo.site/
 - Log in with `admin`/`admin`
-- Press "skip" to avoid changing password
-- Connections > Data source > Add new data source
-- Choose type "Graphite"
-  - Name is "Lando Graphite"
-  - Source URL is `http://graphite.o11y.lndo.site:80`
-- Explore data > Select "Graphite" source
-- Try a query of `*.*.*` - you should get some stats
+- (Press "skip", don't change password)
+- Check out some dashboards:
+  - [Servers - CollectD](http://grafana.o11y.lndo.site/d/servers-collectd/servers-collectd)
 
 ### Provisioning
 
 - Data sources are provisioned for Graphite, Loki, Mimir, and Tempo 
-- [ ] Provision dashboards
+- Some dashboards are provisioned
 
 ### Service configurations
 
-### Loki
+#### Alloy
+
+Alloy is a flexible, high performance, vendor-neutral distribution of the [OpenTelemetry](https://opentelemetry.io/ecosystem/distributions/) Collector.
+
+Relationships between Alloy and other OTel components are graphed at http://alloy.o11y.lndo.site/graph
+
+#### Loki
 
 Loki is a set of open source components that can be composed into a fully featured logging stack.
 
 A data source is provisioned to Grafana to access Loki data.
 
-### Mimir
+#### Mimir
 
 Mimir provides horizontally scalable, highly available, multi-tenant, long-term storage for Prometheus and OpenTelemetry metrics.
 
-Listens on port :8080 internally.
+Alloy config writes Prometheus data to this. Listens on port 8080 and 9095 internally.
 
 > mimir_1  | ts=2025-02-08T18:20:39.456151809Z caller=server.go:351 level=info msg="server listening on addresses" http=[::]:8080 grpc=[::]:9095
 
-### Tempo
+#### Tempo
 
 Tempo is an open-source, easy-to-use, and high-scale distributed tracing backend. Tempo lets you search for traces, generate metrics from spans, and link your tracing data with logs and metrics.
 
-A data source is provisioned to Grafana to access Tempo data.
+- A data source is provisioned to Grafana to access Tempo data.
+- Trace data is visible. Generate trace data from your app, or using Telemetrygen.
 
-- Root shell: `lando ssh -s tempo -u root -c '/busybox/busybox sh'`
+NB: To get a shell in the container, `lando ssh -s tempo -u root -c '/busybox/busybox sh'`
 
 ### Gathering data
 
@@ -94,8 +96,9 @@ Configure Collectd in a Lando environment to gather metrics. See `appserver` exa
 To test OpenTelemetry data collection, we can use [telemetrygen](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/cmd/telemetrygen/v0.88.1/cmd/telemetrygen).
 
 ```
-go install github.com/open-telemetry/opentelemetry-collector-contrib/cmd/telemetrygen@latest
-export OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo.o11y.internal:4318
+lando ssh -s telemetrygen
+telemetrygen traces --otlp-endpoint alloy.o11y.internal:4317 --otlp-insecure --duration 5s
+telemetrygen logs --otlp-endpoint alloy.o11y.internal:4317 --otlp-insecure --duration 5s
 
 ```
 
