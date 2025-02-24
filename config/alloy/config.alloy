@@ -30,7 +30,7 @@ otelcol.processor.batch "default" {
 
 otelcol.exporter.otlphttp "loki" {
   client {
-    endpoint = "loki.o11y.internal:3100/otlp"
+    endpoint = "http://loki.o11y.internal:3100/otlp"
   }
 }
 
