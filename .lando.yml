@@ -72,6 +72,7 @@ services:
       volumes:
         - ./config/grafana/provisioning:/etc/grafana/provisioning
         - ./config/grafana/dashboards:/etc/grafana/dashboards
+        # - grafana_data:/opt/graphite/storage
     portforward: true
 
   graphite:
@@ -84,12 +85,10 @@ services:
       ports:
         - '80'
         - '2003'
+      volumes:
+        - graphite_data:/opt/graphite/storage
     portforward: true
-    # @TODO: Persist Graphite data.
-    # volumes:
-    #   - graphite_data:/opt/graphite/storage
 
-  # Port: 3100, 9096
   loki:
     type: lando
     api: 3
@@ -110,8 +109,6 @@ services:
         - '/usr/bin/loki'
         - '-config.file=/etc/loki/local-config.yaml'
 
-  # Port: 9009
-  # Volumes: /data/blocks, /data/tsdb, /data/rules
   mimir:
     api: 3
     type: lando
@@ -138,8 +135,7 @@ services:
     build:
       - go install github.com/open-telemetry/opentelemetry-collector-contrib/cmd/telemetrygen@latest
 
-  # Ports 3200, 9095
-  # Ports 4317 and 4318 are alloy, which may relay things to tempo.
+  # Ports 3200, 4317, 4318, 9095
   # https://github.com/grafana/tempo/blob/main/example/docker-compose/local/docker-compose.yaml
   # Grafana source: http://tempo.o11y.internal:3200
   tempo:
