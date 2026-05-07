@@ -50,20 +50,552 @@ prometheus.remote_write "default" {
   }
 }
 
-// Push logs from files to Loki.
-
-local.file_match "logs" {
+// Ingest logs from tmp.
+local.file_match "ingest_logs" {
   path_targets = [
-    {__path__ = "/logs/appserver_apache2/*.log", "service_name" = "apache", service_namespace = "o11y"},
-    {__path__ = "/logs/database_mysql/*.log", "service_name" = "mysql"},
-    {__path__ = "/var/log/syslog", "service_name" = "syslog", service_namespace = "o11y"},
+    // @TODO: Put MariaDB logs back in here?
+
+    // [Thu May 29 00:00:14.043319 2025]
+    {
+      __path__ = "/app/tmp/ingest/idora1-apache-error.log",
+      container_name = "idora1",
+      service_name = "apache",
+      log_time_format = "clf_micro_sb_tz",
+      log_type = "error",
+    },
+
+    // [23/Apr/2026:12:00:01 +1200]
+    {
+      __path__ = "/app/tmp/ingest/idora1-apache-access.log",
+      container_name = "idora1",
+      service_name = "apache",
+      log_time_format = "clf_sb",
+      log_type = "access",
+    },
+
+    // [23/Apr/2026:12:00:01 +1200]
+    {
+      __path__ = "/app/tmp/ingest/idora1-apache-islandora_access.log",
+      container_name = "idora1",
+      service_name = "apache",
+      log_time_format = "clf_sb",
+      log_type = "access",
+    },
+
+    // [23/Apr/2026:12:00:04 +1200]
+    {
+      __path__ = "/app/tmp/ingest/idora1-apache-other_vhosts_access.log",
+      container_name = "idora1",
+      service_name = "apache",
+      log_time_format = "clf_sb",
+      log_type = "access",
+    },
+
+    // 23/04/2026 12:45:23 PM (Windows format)
+    {
+      __path__ = "/app/tmp/ingest/idora1-blazegraph-rules.log",
+      container_name = "idora1",
+      service_name = "blazegraph",
+      log_time_format = "windows",
+      log_type = "application",
+    },
+
+    // [Thu 23 Apr 2026 12:02:01 NZST]
+    {
+      __path__ = "/app/tmp/ingest/idora1-drupal-cron.log",
+      container_name = "idora1",
+      service_name = "drupal",
+      log_format = "cron_drupal",
+      log_time_format = "ctime_sb_tz",
+      log_type = "application",
+    },
+
+    // [Thu 23 Apr 2026 12:00:01 NZST]
+    {
+      __path__ = "/app/tmp/ingest/idora1-drupal-migrate.log",
+      container_name = "idora1",
+      service_name = "drupal",
+      log_format = "cron_drupal",
+      log_time_format = "ctime_sb_tz",
+      log_type = "application",
+    },
+
+    // Empty file - has no log entries
+    {
+      __path__ = "/app/tmp/ingest/idora1-drupal-shuffle.log",
+      container_name = "idora1",
+      service_name = "drupal",
+      log_format = "cron_drupal",
+      log_time_format = "ctime_sb_tz",
+      log_type = "application",
+    },
+
+    // Empty file - has no log entries
+    {
+      __path__ = "/app/tmp/ingest/idora1-islandora-fits.log",
+      container_name = "idora1",
+      service_name = "fits",
+      log_time_format = "iso_ish",
+      log_type = "application",
+    },
+
+    // Empty file - has no log entries
+    {
+      __path__ = "/app/tmp/ingest/idora1-islandora-gemini.log",
+      container_name = "idora1",
+      service_name = "gemini",
+      log_time_format = "iso_ish",
+      log_type = "application",
+    },
+
+    // Empty file - has no log entries
+    {
+      __path__ = "/app/tmp/ingest/idora1-islandora-homarus.log",
+      container_name = "idora1",
+      service_name = "homarus",
+      log_time_format = "iso_ish",
+      log_type = "application",
+    },
+
+    // Empty file - has no log entries
+    {
+      __path__ = "/app/tmp/ingest/idora1-islandora-houdini.log",
+      container_name = "idora1",
+      service_name = "houdini",
+      log_time_format = "iso_ish",
+      log_type = "application",
+    },
+
+    // [2026-04-23T12:45:22.490420+12:00] (RFC3339 with microseconds)
+    {
+      __path__ = "/app/tmp/ingest/idora1-islandora-milliner.log",
+      container_name = "idora1",
+      service_name = "milliner",
+      log_time_format = "rfc3339_micro",
+      log_type = "application",
+    },
+
+    // 2021/10/08 02:23:00 (Japanese format - but needs verification from actual file)
+    {
+      __path__ = "/app/tmp/ingest/idora1-karaf-wrapper.log",
+      container_name = "idora1",
+      service_name = "karaf",
+      log_time_format = "japanese",
+      log_type = "application",
+    },
+
+    // Syslog format
+    {
+      __path__ = "/app/tmp/ingest/idora1-syslog.log",
+      container_name = "idora1",
+      service_name = "syslog",
+      log_type = "system",
+    },
+
+    // 29-May-2025 05:31:51.268 (Oracle/Tomcat format)
+    {
+      __path__ = "/app/tmp/ingest/idora1-tomcat9-catalina.log",
+      container_name = "idora1",
+      service_name = "tomcat",
+      log_time_format = "oracle",
+      log_type = "application",
+    },
+
+    // 29-May-2025 05:31:57.392 (Oracle/Tomcat format)
+    {
+      __path__ = "/app/tmp/ingest/idora1-tomcat9-localhost_access.log",
+      container_name = "idora1",
+      service_name = "tomcat",
+      log_time_format = "oracle",
+      log_type = "access",
+    },
+
+    // [23/Apr/2026:12:01:43 +0000]
+    {
+      __path__ = "/app/tmp/ingest/proxy1-nginx-unproxied-access.log",
+      container_name = "proxy1",
+      service_name = "nginx",
+      log_time_format = "clf_sb",
+      log_type = "access",
+    },
+
+    // [23/Apr/2026:12:00:14 +0000]
+    {
+      __path__ = "/app/tmp/ingest/proxy1-varnishncsa.log",
+      container_name = "proxy1",
+      service_name = "varnish",
+      log_time_format = "clf_sb",
+      log_type = "access",
+    },
+
+    // [23/Apr/2026:12:00:42 +0000] (Common log format, UTC)
+    {
+      __path__ = "/app/tmp/ingest/cantaloupe1-cantaloupe-access.log",
+      container_name = "cantaloupe1",
+      service_name = "cantaloupe",
+      log_time_format = "clf_sb",
+      log_type = "access",
+    },
+
+    // 2026-04-23 12:01:06,237 (ISO format with milliseconds)
+    {
+      __path__ = "/app/tmp/ingest/cantaloupe1-cantaloupe-application.log",
+      container_name = "cantaloupe1",
+      service_name = "cantaloupe",
+      log_time_format = "iso_ish",
+      log_type = "application",
+    },
+
+    // Empty file
+    {
+      __path__ = "/app/tmp/ingest/cantaloupe1-cantaloupe-error.log",
+      container_name = "cantaloupe1",
+      service_name = "cantaloupe",
+      log_type = "error",
+    },
   ]
 }
 
-loki.source.file "logs" {
-  targets    = local.file_match.logs.targets
-  forward_to = [loki.write.local.receiver]
+// Read a local Lando environment's logs.
+local.file_match "lando_live_logs" {
+  path_targets = [
+    {
+      __path__ = "/var/log/apache2/error.log",
+      container_name = "idora1",
+      log_time_format = "clf_micro_sb_tz",
+      log_type = "error",
+      service_name = "apache",
+      service_namespace = sys.env("LANDO_APP_NAME"),
+    },
+
+    {
+      __path__ = "/var/log/apache2/access.log",
+      container_name = "idora1",
+      log_time_format = "clf_sb",
+      log_type = "access",
+      service_name = "apache",
+      service_namespace = sys.env("LANDO_APP_NAME"),
+    },
+
+    {
+      __path__ = "/var/log/apache2/other_vhosts_access.log",
+      container_name = "idora1",
+      log_time_format = "clf_sb",
+      log_type = "access",
+      service_name = "apache",
+      service_namespace = sys.env("LANDO_APP_NAME"),
+    },
+
+    // MariaDB logs.
+    // 250710  1:36:42
+    {
+      __path__ = "/var/log/mariadb/mysql.log",
+      log_format = "mysql",
+      service_name = "mysql",
+      service_namespace = sys.env("LANDO_APP_NAME"),
+    },
+
+    // 2025-07-10  1:31:11
+    // (UTC?)
+    {
+      __path__ = "/var/log/mariadb/mysql_error.log",
+      log_format = "mysql_error",
+      log_time_format = "syslog_space",
+      service_name = "mysql",
+      service_namespace = sys.env("LANDO_APP_NAME"),
+    },
+
+    {
+      __path__ = "/var/log/syslog",
+      service_name = "syslog",
+      service_namespace = sys.env("LANDO_APP_NAME"),
+    },
+  ]
 }
+
+local.file_match "mariadb_slow_query_log_file" {
+  path_targets = [
+    // Multiline.
+    // Start is `^# User@Host`
+    // Time is `^SET timestamp=([\d]+);$`
+    {
+      __path__ = "/var/log/mariadb/slow_query.log",
+      log_format = "mysql_slow_query",
+      log_time_format = "syslog_space",
+      service_name = "mysql",
+      service_namespace = sys.env("LANDO_APP_NAME"),
+    },
+
+    {
+      __path__ = "/user/Projects/odt-d7/tmp/wr482870/mysql-slow.log",
+      container_name = "odt-d7-prod-db1",
+      service_name = "mysql",
+      service_namespace = "odt-d7-prod",
+      log_time_format = "syslog_space",
+      log_type = "slow_query",
+      log_format = "mysql_slow_query",
+    },
+
+  ]
+}
+
+// loki.source.file "lando_live_logs" {
+//  targets    = local.file_match.lando_live_logs.targets
+//  forward_to = [loki.process.multiline_processor.receiver]
+// }
+
+loki.source.file "ingest_logs" {
+ targets    = local.file_match.ingest_logs.targets
+ forward_to = [loki.relabel.ingest.receiver]
+}
+
+loki.relabel "ingest" {
+  forward_to = [loki.process.multiline_processor.receiver]
+  rule {
+    target_label = "service_namespace"
+    replacement = "Ingested"
+  }
+}
+
+loki.source.file "mariadb_slow_query_log" {
+  targets    = local.file_match.mariadb_slow_query_log_file.targets
+  forward_to = [loki.process.mysql_slow_query_log_multiline.receiver]
+}
+
+loki.process "mysql_slow_query_log_multiline" {
+  forward_to = [loki.process.timestamp_processor.receiver]
+  stage.multiline {
+    firstline     = "^# User@Host:"
+    max_lines     = 0
+    max_wait_time = "3s"
+  }
+}
+
+// Process multiline formats
+// Must run at ingest / before remote.
+loki.process "multiline_processor" {
+  forward_to = [loki.process.timestamp_processor.receiver]
+
+  // Drupal cron entries are multiline.
+  stage.match {
+    selector = "{log_format=\"cron_drupal\"}"
+    stage.multiline {
+      // [Thu 29 May 2025 00:02:01 NZST]
+      firstline = "^\\[[A-Za-z]{3} "
+      max_wait_time = "2s"
+    }
+  }
+
+  // MySQL slow query log entries are multiline.
+  stage.match {
+    selector = "{log_format=\"mysql_slow_query\"}"
+    stage.multiline {
+      firstline = "^# User@Host:"
+      max_wait_time = "2s"
+    }
+  }
+}
+
+// Process timestamp formats
+loki.process "timestamp_processor" {
+  forward_to = [loki.write.local.receiver]
+
+  // clf_sb - common log format, square brackets, tz.
+  stage.match {
+    selector = "{log_time_format=\"clf_sb\"}"
+    stage.regex {
+      expression = "\\[(?P<logtime>\\d{2}/[A-Za-z]+/\\d{4}:\\d{2}:\\d{2}:\\d{2} [+-][0-9]{4})"
+    }
+    stage.timestamp {
+      source = "logtime"
+      format = "02/Jan/2006:15:04:05 -0700"
+    }
+  }
+
+  // iso_ish - MySQL datetime format: 2025-05-29 00:01:45
+  // karaf-karaf.log
+  // 2025-05-29 00:01:45,453 INFO [qtp1706292388-10706] e.i.l.c.r.i.v.IdentifierResource [AbstractResource.java:156] Handling GET /iiif/2/https%3A%2F%2Fwww.example.org%2F_flysystem%2Ffedora%2Fmigration%2Fexample.tif
+  stage.match {
+    selector = "{log_time_format=\"iso_ish\"}"
+    stage.regex {
+      expression = "(?P<logtime>\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2})"
+    }
+    stage.timestamp {
+      source = "logtime"
+      format = "2006-01-02 15:04:05"
+      location = "Pacific/Auckland"
+    }
+  }
+
+  // syslog_space - Syslog space-padded: 2025-05-29  8:01:45
+  // Older MySQL error log & syslog.
+  stage.match {
+    selector = "{log_time_format=\"syslog_space\"}"
+    stage.regex {
+      expression = "(?P<logtime>\\d{4}-\\d{2}-\\d{2} [ \\d]\\d:\\d{2}:\\d{2})"
+    }
+    stage.timestamp {
+      source = "logtime"
+      format = "2006-01-02 15:04:05"
+    }
+  }
+
+  // rfc3339_micro - RFC3339 with microseconds, aka ISO8601
+  // 2026-04-23T12:45:22.490420+12:00
+  // idora1-islandora-milliner.log
+  stage.match {
+    selector = "{log_time_format=\"rfc3339_micro\"}"
+    stage.regex {
+      expression = "(?P<logtime>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}[+-]\\d{2}:\\d{2})"
+    }
+    stage.timestamp {
+      source = "logtime"
+      format = "2006-01-02T15:04:05.000000-07:00"
+    }
+  }
+
+  // windows - Windows/DOS format
+  // 29/05/2025 8:47:18 AM
+  stage.match {
+    selector = "{log_time_format=\"windows\"}"
+    stage.regex {
+      expression = "(?P<logtime>\\d{2}/\\d{2}/\\d{4} \\d{1,2}:\\d{2}:\\d{2} .M)"
+    }
+    stage.timestamp {
+      source = "logtime"
+      format = "02/01/2006 3:04:05 PM"
+    }
+    // BlazeGraph is dropping CSV-like headers into the logfile, drop those.
+	stage.match {
+		selector = `{logtime!~".+"}`
+		action   = "drop"
+	}
+  }
+
+  // 29-May-2025 05:31:57.392
+  // 29-May-2025 05:31:57.392 WARNING [Thread-12] org.apache.catalina.session.StandardSession.doWriteObject Cannot serialize session attribute [org.apache.shiro.subject.support.DelegatingSubject.RUN_AS_PRINCIPALS_SESSION_KEY] for session [55265EA0EB548A1653DE7EF15F5298BB]
+  stage.match {
+    selector = "{log_time_format=\"oracle\"}"
+    stage.regex {
+      expression = "(?P<logtime>\\d{2}-[A-Za-z]+-\\d{4} \\d{2}:\\d{2}:\\d{2}\\.\\d{3})"
+    }
+    stage.timestamp {
+      source = "logtime"
+      format = "02-Jan-2006 15:04:05.000"
+      location = "UTC"
+    }
+  }
+
+  // ctime_sb_tz - UNIX date / ctime format, square brackets, TZ.
+  stage.match {
+    selector = "{log_time_format=\"ctime_sb_tz\"}"
+    stage.regex {
+      expression = "\\[(?P<logtime>[A-Za-z]+ \\d{2} [A-Za-z]+ \\d{4} \\d{2}:\\d{2}:\\d{2}) "
+    }
+    stage.timestamp {
+      source = "logtime"
+      format = "Mon 02 Jan 2006 15:04:05"
+      location = "Pacific/Auckland"
+    }
+  }
+
+  // syslog_ms - another syslog format?
+  // FC Repo does this. No year! Go defaults to year 0000.
+  // 02-Jan 03:04:05.678
+  //
+  stage.match {
+    selector = "{log_time_format=\"syslog_ms\"}"
+    stage.regex {
+      // 29-May 00:02:02.084
+      expression = "^(?P<logtime>\\d{2}-[A-Za-z]{3} +\\d+:\\d{2}:\\d{2}\\.[0-9]{3})"
+    }
+    stage.timestamp {
+      source = "logtime"
+      format = "02-Jan 15:04:05.000"
+    }
+  }
+
+  // mysql_sqf
+  // 02-Jan 03:04:05.678
+  stage.match {
+    selector = "{log_time_format=\"mysql_sqf\"}"
+    stage.multiline {
+      // # Time: 250526  0:00:38
+      firstline = "^# Time:"
+    }
+    stage.regex {
+      expression = "# Time: (?P<logtime>\\d{6} +\\d+:\\d{2}:\\d{2})"
+    }
+    stage.timestamp {
+      source = "logtime"
+      format = "060102 15:04:05"
+      location = "Pacific/Auckland"
+    }
+  }
+
+  // mysql_slow_query - MariaDB/MySQL slow query log with SET timestamp=
+  stage.match {
+    selector = "{log_format=\"mysql_slow_query\"}"
+    stage.regex {
+      expression = "SET timestamp=(?P<unix_timestamp>\\d+);"
+    }
+    stage.timestamp {
+      source = "unix_timestamp"
+      format = "Unix"
+      location = "Pacific/Auckland"
+    }
+    stage.regex {
+      expression = "# Query_time: (?P<query_time>[\\d.]+)\\s+Lock_time: (?P<lock_time>[\\d.]+)\\s+Rows_sent: (?P<rows_sent>\\d+)\\s+Rows_examined: (?P<rows_examined>\\d+)"
+    }
+    // stage.labels {
+    //   values = {
+    //     xx_ts = "unix_timestamp",
+    //     query_time = "query_time",
+    //     lock_time = "lock_time",
+    //     rows_sent = "rows_sent",
+    //     rows_examined = "rows_examined",
+    //   }
+    // }
+  }
+
+  // japanese - ISO order with slashes
+  // 29/05/2025 8:47:18 AM
+  // Oct 08, 2021 2:23:09 AM
+  stage.match {
+    selector = "{log_time_format=\"japanese\"}"
+    stage.regex {
+      expression = "(?P<logtime>\\d{4}/\\d{2}/\\d{2} \\d{2}:\\d{2}:\\d{2})"
+    }
+    stage.timestamp {
+      source = "logtime"
+      format = "2006/02/01 15:04:05"
+    }
+  }
+
+  // clf_micro_sb_tz - common log format, microseconds, square brackets, TZ.
+  // Not parsing currently?
+  stage.match {
+    selector = "{log_time_format=\"clf_micro_sb_tz\"}"
+    stage.regex {
+      expression = "\\[(?P<logtime>[A-Za-z]+ [A-Za-z]+ \\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{6})\\]"
+    }
+    stage.timestamp {
+      source = "logtime"
+      //       "Thu May 29 08:47:45.284730 2025"
+      //       "Thu May 29 12:56:46.515463 2025"
+      //        Tue Mar 17 10:21:13.923509 2026
+      format = "Mon Jan 02 15:04:05.000000 2006"
+      location = "Pacific/Auckland"
+    }
+  }
+
+  stage.label_drop {
+    values = ["log_time_format", "log_format"]
+  }
+}
+
+// We can discard log entries if they lack a timestamp now?
+// Multiline entries may be incomplete. Chuck 'em.
 
 loki.write "local" {
   endpoint {
