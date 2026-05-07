@@ -21,7 +21,7 @@ query_range:
 
 schema_config:
   configs:
-    - from: 2024-04-01
+    - from: 2020-01-01
       object_store: filesystem
       store: tsdb
       schema: v13
@@ -34,3 +34,25 @@ ruler:
 
 analytics:
   reporting_enabled: false
+
+limits_config:
+  # If reject_old_samples is false, Loki will reject samples that exceed the default limits!
+  reject_old_samples: true
+  reject_old_samples_max_age: 1y
+  # Odd name for future dated sample limit:
+  # creation_grace_period: 1y
+  max_global_streams_per_user: 0
+  # max_global_streams_per_user: 50000
+  # stream_limit: 0
+  # ingestion_rate_mb: 0
+  max_line_size: 1MB          # Increase from 256KB
+  max_line_size_truncate: true # Truncate instead of reject
+
+  # Rate limiting
+  ingestion_rate_mb: 10       # 10MB/sec per tenant
+  ingestion_burst_size_mb: 20 # 20MB burst
+  max_streams_per_user: 250000
+  volume_enabled: true
+
+ingester:
+  max_chunk_age: 7200h

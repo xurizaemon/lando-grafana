@@ -36,7 +36,7 @@ otelcol.exporter.otlphttp "loki" {
 
 otelcol.exporter.otlphttp "tempo" {
   client {
-    endpoint = "http://tempo.o11y.internal:4318"
+    endpoint = "http://tempo.o11y.internal:3200"
   }
 }
 
