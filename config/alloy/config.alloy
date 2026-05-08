@@ -175,7 +175,7 @@ local.file_match "ingest_logs" {
       log_type = "application",
     },
 
-    // 2021/10/08 02:23:00 (Japanese format - but needs verification from actual file)
+    // 2026/04/23 17:36:44
     {
       __path__ = "/app/tmp/ingest/idora1-karaf-wrapper.log",
       container_name = "idora1",
@@ -184,11 +184,12 @@ local.file_match "ingest_logs" {
       log_type = "application",
     },
 
-    // Syslog format
+    // 2026-04-23T13:59:58.689307+12:00
     {
       __path__ = "/app/tmp/ingest/idora1-syslog.log",
       container_name = "idora1",
       service_name = "syslog",
+      log_time_format = "rfc3339_micro",
       log_type = "system",
     },
 
@@ -201,12 +202,12 @@ local.file_match "ingest_logs" {
       log_type = "application",
     },
 
-    // 29-May-2025 05:31:57.392 (Oracle/Tomcat format)
+    // [23/Apr/2026:13:15:05 +1200]
     {
       __path__ = "/app/tmp/ingest/idora1-tomcat9-localhost_access.log",
       container_name = "idora1",
       service_name = "tomcat",
-      log_time_format = "oracle",
+      log_time_format = "clf_sb",
       log_type = "access",
     },
 
@@ -327,10 +328,10 @@ local.file_match "mariadb_slow_query_log_file" {
     },
 
     {
-      __path__ = "/user/Projects/odt-d7/tmp/wr482870/mysql-slow.log",
-      container_name = "odt-d7-prod-db1",
+      __path__ = "/app/tmp/ingest/mysql-slow.log",
+      container_name = "example-db1",
       service_name = "mysql",
-      service_namespace = "odt-d7-prod",
+      service_namespace = "example",
       log_time_format = "syslog_space",
       log_type = "slow_query",
       log_format = "mysql_slow_query",
@@ -559,8 +560,7 @@ loki.process "timestamp_processor" {
   }
 
   // japanese - ISO order with slashes
-  // 29/05/2025 8:47:18 AM
-  // Oct 08, 2021 2:23:09 AM
+  // 2026/04/23 17:36:44
   stage.match {
     selector = "{log_time_format=\"japanese\"}"
     stage.regex {
@@ -568,22 +568,20 @@ loki.process "timestamp_processor" {
     }
     stage.timestamp {
       source = "logtime"
-      format = "2006/02/01 15:04:05"
+      format = "2006/01/02 15:04:05"
+      location = "Pacific/Auckland"
     }
   }
 
   // clf_micro_sb_tz - common log format, microseconds, square brackets, TZ.
-  // Not parsing currently?
+  // [Thu Apr 23 13:59:59.254761 2026]
   stage.match {
     selector = "{log_time_format=\"clf_micro_sb_tz\"}"
     stage.regex {
-      expression = "\\[(?P<logtime>[A-Za-z]+ [A-Za-z]+ \\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{6})\\]"
+      expression = "\\[(?P<logtime>[A-Za-z]+ [A-Za-z]+ \\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{6} \\d{4})\\]"
     }
     stage.timestamp {
       source = "logtime"
-      //       "Thu May 29 08:47:45.284730 2025"
-      //       "Thu May 29 12:56:46.515463 2025"
-      //        Tue Mar 17 10:21:13.923509 2026
       format = "Mon Jan 02 15:04:05.000000 2006"
       location = "Pacific/Auckland"
     }
