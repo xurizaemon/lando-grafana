@@ -1,1 +1,6 @@
 tmp/
+graphite_data/
+tempo_data/
+data_loki/
+.idea/
+apache_logs_data/
